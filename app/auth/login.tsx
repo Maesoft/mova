@@ -3,6 +3,7 @@
 import { Image, Pressable, Text, TextInput, View } from 'react-native';
 
 import { COLORS } from '../../src/constants/colors';
+import { router } from 'expo-router';
 
 export default function LoginScreen() {
   return (
@@ -83,6 +84,7 @@ export default function LoginScreen() {
 
         {/* BUTTON */}
         <Pressable
+          onPress={() => router.replace('/(tabs)')}
           className="
             mt-4
             items-center
