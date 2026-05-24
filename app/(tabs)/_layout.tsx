@@ -23,7 +23,8 @@ export default function TabsLayout() {
         // 🧼 Labels
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: '600',
+          fontWeight: '800',
+          fontFamily: 'Montserrat-SemiBold',
         },
       }}
     >

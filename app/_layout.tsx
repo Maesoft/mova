@@ -6,6 +6,14 @@ import { Stack, Redirect, useSegments } from "expo-router";
 
 import { ActivityIndicator, View } from "react-native";
 
+import { useFonts } from "expo-font";
+
+import {
+  Montserrat_400Regular,
+  Montserrat_500Medium,
+  Montserrat_700Bold,
+} from "@expo-google-fonts/montserrat";
+
 import { COLORS } from "@/constants/colors";
 
 import { getHasSeenOnboarding } from "@/store/app.store";
