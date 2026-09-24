@@ -6,6 +6,7 @@ import {
 
 import Card from "../ui/Card";
 import Button from "../ui/Button";
+import { router } from "expo-router";
 
 type Props = {
   title: string;
@@ -19,10 +20,10 @@ export default function RoutineCard({
   image,
 }: Props) {
   return (
-    <Card className="flex-row p-5">
+    <Card className="flex-row p-5 bg-gray-900">
       <View className="flex-1 justify-between pr-4">
         <View>
-          <Text className="text-[#C6FF3B] font-semibold">
+          <Text className="text-primary font-semibold">
             TU RUTINA
           </Text>
 
@@ -30,22 +31,22 @@ export default function RoutineCard({
             {title}
           </Text>
 
-          <Text className="text-[#9CA3AF] mt-2">
+          <Text className="text-white mt-2">
             {muscles}
           </Text>
 
           <View className="flex-row gap-4 mt-4 mb-2">
-            <Text className="text-[#9CA3AF]">
+            <Text className="text-white">
               ⏱ 45 min
             </Text>
 
-            <Text className="text-[#9CA3AF]">
+            <Text className="text-white">
               📈 Intermedio
             </Text>
           </View>
         </View>
 
-        <Button title="Comenzar rutina" />
+        <Button title="Comenzar rutina" onPress={()=>router.push("/routine")}/>
       </View>
 
       <Image

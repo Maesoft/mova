@@ -6,8 +6,14 @@ import HeroCard from "@/components/home/HeroCard";
 import RoutineCard from "@/components/home/RoutineCard";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/colors";
+import NutritionCard from "@/components/home/NutritionCard";
+import ChallengersCard from "@/components/home/ChallengersCard";
+import { useRoutineStore } from "@/store/routine.store";
+
 
 export default function HomeScreen() {
+  const { routine } = useRoutineStore();
+
   return (
     <SafeAreaView className="flex-1 bg-black">
       <ScrollView
@@ -25,17 +31,17 @@ export default function HomeScreen() {
             <Ionicons name="notifications" color={COLORS.primary} size={20} />
             <Ionicons name="people" color={COLORS.primary} size={20} />
           </View>
-
-
         </View>
 
         <HeroCard />
 
         <RoutineCard
-          title="Upper Body"
-          muscles="Espalda • Pecho • Bíceps"
+          title={routine?.routine.name || "Upper Body"}
+          muscles={"Dia " + routine?.currentDay || "Espalda • Pecho • Bíceps"}
           image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48"
         />
+        <NutritionCard />
+        <ChallengersCard />
       </ScrollView>
     </SafeAreaView>
   );

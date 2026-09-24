@@ -44,6 +44,24 @@ export default function TabsLayout() {
         options={{
           title: "Rutina",
           tabBarIcon: ({ color, size }) => (
+            <Ionicons name="barbell-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="nutrition"
+        options={{
+          title: "Nutricion",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="nutrition-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="challengers"
+        options={{
+          title: "Challengers",
+          tabBarIcon: ({ color, size }) => (
             <Ionicons name="list" size={size} color={color} />
           ),
         }}

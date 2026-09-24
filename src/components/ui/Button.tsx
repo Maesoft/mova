@@ -3,16 +3,19 @@ import { Pressable, Text } from "react-native";
 type Props = {
   title: string;
   variant?: "primary" | "outline";
+  onPress?: () => void;
 };
 
 export default function Button({
   title,
   variant = "primary",
+  onPress,
 }: Props) {
   const isPrimary = variant === "primary";
 
   return (
     <Pressable
+      onPress={onPress}
       className={`
         h-14
         rounded-full

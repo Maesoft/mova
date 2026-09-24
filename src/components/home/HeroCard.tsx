@@ -14,7 +14,7 @@ export default function HeroCard() {
           opacity: 0.55,
         }}
       >
-        <View className="flex-1 p-6 justify-between">
+        <View className="flex-1 p-4 justify-between">
           <Text className="text-white text-lg">
             ☀️ Buen día, Matías 👋
           </Text>
@@ -23,12 +23,12 @@ export default function HeroCard() {
             <Text className="text-white text-4xl font-bold leading-[46px]">
               Cada entrenamiento{"\n"}
               te acerca a tu{"\n"}
-              <Text className="text-[#cfff55]">
+              <Text className="text-primary">
                 mejor versión.
               </Text>
             </Text>
 
-            <Text className="text-[#A3A3A3] mt-4 text-base">
+            <Text className="text-muted mt-4 text-base">
               Seguí enfocándote, lo estás logrando.
             </Text>
           </View>
