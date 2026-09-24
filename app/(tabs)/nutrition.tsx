@@ -1,105 +1,87 @@
-// app/nutrition/index.tsx
+import { useCallback, useState } from 'react';
 
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { useFocusEffect } from 'expo-router';
 
-import { router } from "expo-router";
+import { ActivityIndicator, Image, Pressable, ScrollView, Text, View } from 'react-native';
+
+import { getPublishedNutritionRequest, PublishedNutrition } from '@/api/nutrition.api';
 
 export default function NutritionScreen() {
-  // MOCK
-  const nutrition = {
-    title: "Tostadas proteicas con palta",
-    image:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-    recipe: `
-Ingredientes
+  const [nutrition, setNutrition] = useState<PublishedNutrition | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-• 2 tostadas integrales
-• 1 palta madura
-• 2 huevos
-• Sal y pimienta
+  const loadNutrition = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(false);
+      setNutrition(await getPublishedNutritionRequest());
+    } catch (requestError) {
+      console.log('Error loading published nutrition:', requestError);
+      setError(true);
+      setNutrition(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-Preparación
+  useFocusEffect(
+    useCallback(() => {
+      void loadNutrition();
+    }, [loadNutrition])
+  );
 
-1. Tostar el pan.
-2. Pisar la palta.
-3. Cocinar los huevos.
-4. Colocar todo sobre las tostadas.
-5. Servir y disfrutar.
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-background">
+        <ActivityIndicator size="large" color="#C6FF3B" />
+        <Text className="mt-4 text-muted">Cargando receta...</Text>
+      </View>
+    );
+  }
 
-Macros aproximados
-
-• Proteínas: 22g
-• Carbohidratos: 28g
-• Grasas: 18g
-    `,
-  };
-
-  return (
-    <View className="flex-1 bg-background">
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: 120,
-        }}
-      >
-        {/* IMAGEN */}
-        <Image
-          source={{
-            uri: nutrition.image,
-          }}
-          className="h-80 w-full"
-          resizeMode="cover"
-        />
-
-        {/* CONTENIDO */}
-        <View className="px-6 py-6">
-          <Text className="text-primary text-sm font-bold">
-            NUTRICIÓN
-          </Text>
-
-          <Text className="mt-2 text-3xl font-bold text-white">
-            {nutrition.title}
-          </Text>
-
-          <View
-            className="
-              mt-6
-              rounded-3xl
-              border
-              border-border
-              bg-card
-              p-5
-            "
-          >
-            <Text className="text-muted text-base leading-7">
-              {nutrition.recipe}
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
-
-      {/* BOTÓN */}
-      <View className="absolute bottom-8 left-6 right-6">
-        <Pressable
-          onPress={() => router.back()}
-          className="
-            items-center
-            rounded-2xl
-            bg-primary
-            py-4
-          "
-        >
-          <Text className="font-bold text-base text-black">
-            Volver
-          </Text>
+  if (error) {
+    return (
+      <View className="flex-1 items-center justify-center bg-background px-6">
+        <Text className="text-center text-white">No pudimos cargar la receta.</Text>
+        <Pressable onPress={loadNutrition} className="mt-5 rounded-2xl bg-primary px-6 py-3">
+          <Text className="font-bold text-black">Reintentar</Text>
         </Pressable>
       </View>
-    </View>
+    );
+  }
+
+  if (!nutrition) {
+    return (
+      <View className="flex-1 items-center justify-center bg-background px-6">
+        <Text className="text-center text-white">
+          No hay ninguna receta publicada por el momento.
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView
+      className="flex-1 bg-background"
+      contentContainerStyle={{ paddingBottom: 120 }}
+      showsVerticalScrollIndicator={false}>
+      {nutrition.image ? (
+        <Image source={{ uri: nutrition.image }} className="h-80 w-full" resizeMode="cover" />
+      ) : (
+        <View className="h-48 items-center justify-center bg-card">
+          <Text className="text-muted">Imagen no disponible</Text>
+        </View>
+      )}
+
+      <View className="px-6 py-6">
+        <Text className="font-bold text-sm text-primary">NUTRICIÓN</Text>
+        <Text className="mt-2 font-bold text-3xl text-white">{nutrition.title}</Text>
+
+        <View className="mt-6 rounded-3xl border border-border bg-card p-5">
+          <Text className="text-base leading-7 text-muted">{nutrition.description}</Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 }

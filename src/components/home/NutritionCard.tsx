@@ -1,46 +1,51 @@
-import {
-  Image,
-  Text,
-  View,
-} from "react-native";
+import { Image, Pressable, Text, View } from 'react-native';
 
-import Card from "../ui/Card";
+import { router } from 'expo-router';
 
-export default function NutritionCard({title, description, image}: {title?: string, description?: string, image?: string}) {
+import Card from '../ui/Card';
+
+export default function NutritionCard({
+  title,
+  description,
+  image,
+}: {
+  title?: string;
+  description?: string;
+  image?: string;
+}) {
   return (
-    <Card className="p-5 bg-primaryDark">
-      <View className="flex-row items-center">
-        {/* INFO */}
-        <View className="flex-1 pr-4">
-          <Text className="text-primary font-bold text-sm">
-            ALIMENTACIÓN
-          </Text>
+    <Pressable onPress={() => router.push('/nutrition')}>
+      <Card className="bg-primaryDark p-5">
+        <View className="flex-row items-center">
+          {/* INFO */}
+          <View className="flex-1 pr-4">
+            <Text className="font-bold text-sm text-primary">ALIMENTACIÓN</Text>
 
-          <Text className="text-white text-2xl font-bold mt-2">
-            {title || "Plan nutricional personalizado"}
-          </Text>
+            <Text className="mt-2 font-bold text-2xl text-white">
+              {title || 'Plan nutricional personalizado'}
+            </Text>
 
-          <Text className="text-white mt-3 leading-5">
-            {description || "Descubrí planes alimenticios y recetas para potenciar tus resultados."}
-          </Text>
+            <Text className="mt-3 leading-5 text-white">
+              {description ||
+                'Descubrí planes alimenticios y recetas para potenciar tus resultados.'}
+            </Text>
 
-          <View className="mt-5">
-            <View className="bg-primary self-start px-4 py-2 rounded-full">
-              <Text className="text-black font-bold">
-                Ver planes
-              </Text>
+            <View className="mt-5">
+              <View className="self-start rounded-full bg-primary px-4 py-2">
+                <Text className="font-bold text-black">Ver planes</Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        {/* IMAGE */}
-        <Image
-          source={{
-            uri: image || "https://images.unsplash.com/photo-1490645935967-10de6ba17061",
-          }}
-          className="w-[120px] h-[160px] rounded-[24px]"
-        />
-      </View>
-    </Card>
+          {/* IMAGE */}
+          <Image
+            source={{
+              uri: image || 'https://images.unsplash.com/photo-1490645935967-10de6ba17061',
+            }}
+            className="h-[160px] w-[120px] rounded-[24px]"
+          />
+        </View>
+      </Card>
+    </Pressable>
   );
 }
